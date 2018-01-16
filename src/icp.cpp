@@ -95,12 +95,11 @@ void Icp::fitIterate( double *T,const int32_t T_num,Matrix &R,Matrix &t, double 
 	double delta = 1000;
 	int32_t iter;
 	for(iter=0; iter<m_max_iter && delta>m_min_delta; iter++){
-		indist = std::max(indist*0.9,0.05);
 		if(indist>0){
+			indist = std::max(indist*0.9,0.05);
 			m_active = getInliers(T,T_num,R,t,indist);
 			m_inlier_ratio = (double)m_active.size()/T_num;
 		}
 		delta=fitStep(T,T_num,R,t,m_active);
-
 	}
 }
