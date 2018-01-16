@@ -317,7 +317,6 @@ void IcpPointToPlane::computeNormal (const kdtree::KDTreeResultVector &neighbors
       mu.val[0][0] += x;
       mu.val[0][1] += y;
     }
-
     // zero mean
     mu       = mu/(double)neighbors.size();
     Matrix Q = P - Matrix::ones(neighbors.size(),1)*mu;
@@ -369,8 +368,8 @@ double* IcpPointToPlane::computeNormals (const int32_t num_neighbors,const doubl
   double *M_normal = (double*)malloc(m_kd_tree->N*m_dim*sizeof(double));
   kdtree::KDTreeResultVector neighbors;
   for (int32_t i=0; i<m_kd_tree->N; i++) {
-    //M_tree->n_nearest_around_point(i,0,num_neighbors,neighbors);
-	m_kd_tree->r_nearest_around_point(i,0,0.05,neighbors);
+    m_kd_tree->n_nearest_around_point(i,0,num_neighbors,neighbors);
+    // m_kd_tree->r_nearest_around_point(i,0,0.05,neighbors);
     if (m_dim==2) computeNormal(neighbors,M_normal+i*2,flatness);
     else        computeNormal(neighbors,M_normal+i*3,flatness);
   }
